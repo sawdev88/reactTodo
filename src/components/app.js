@@ -6,16 +6,18 @@ class App extends Component {
     super(props);
 
     this.state = {
-      todos: ['test']
+      todos: []
     }
 
     const addTodo = this.addTodo.bind(this);
   }
 
   addTodo(item) {
-    this.setState({
-      todos: this.state.todos.concat(item)
-    })
+    if (item.length) {
+      this.setState({
+        todos: this.state.todos.concat(item)
+      })
+    }
   }
 
   removeTodo(idx) {
@@ -25,24 +27,27 @@ class App extends Component {
   }
 
   renderTodoList() {
-    return (
-      <ul>
-        {this.state.todos.map( (item, i) => {
-          return (
-            <li
-              key={ i }
-              onClick={ this.markTodoCompleted }>
-              <i
-                onClick={ () => this.removeTodo(i) }
-                className="fa fa-trash"
-                aria-hidden="true">
-              </i>
-              { item }
-            </li>
-          )
-        })}
-      </ul>
-    )
+    if (this.state.todos.length) {
+      return (
+        <ul>
+          {this.state.todos.map( (item, i) => {
+            return (
+              <li
+                key={ i }
+                onClick={ this.markTodoCompleted }>
+                <i
+                  onClick={ () => this.removeTodo(i) }
+                  className="fa fa-trash"
+                  aria-hidden="true">
+                </i>
+                { item }
+              </li>
+            )
+          })}
+        </ul>
+      )} else {
+        return <div className="center margin-top">No Items</div>
+      }
   }
 
   markTodoCompleted(e) {
@@ -50,7 +55,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state.todos);
     return (
       <div className="todo-container">
         <h1>React Todo</h1>
