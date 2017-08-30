@@ -6,7 +6,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      todos: []
+      todos: ['test']
     }
 
     const addTodo = this.addTodo.bind(this);
@@ -18,20 +18,42 @@ class App extends Component {
     })
   }
 
+  removeTodo(idx) {
+    this.setState({
+      todos: this.state.todos.filter( (_, i) => i !== idx)
+    })
+  }
+
   renderTodoList() {
     return (
       <ul>
-        {this.state.todos.map( item => {
-          return <li>{ item }</li>
+        {this.state.todos.map( (item, i) => {
+          return (
+            <li
+              key={ i }
+              onClick={ this.markTodoCompleted }>
+              <i
+                onClick={ () => this.removeTodo(i) }
+                className="fa fa-trash"
+                aria-hidden="true">
+              </i>
+              { item }
+            </li>
+          )
         })}
       </ul>
     )
   }
 
+  markTodoCompleted(e) {
+    e.target.classList.toggle('completed');
+  }
+
   render() {
     console.log(this.state.todos);
     return (
-      <div className="container">
+      <div className="todo-container">
+        <h1>React Todo</h1>
         <Input addTodo={ this.addTodo.bind(this) } />
           { this.renderTodoList() }
       </div>

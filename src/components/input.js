@@ -19,7 +19,7 @@ class Input extends Component {
         <input
           value={ this.state.item }
           onChange={ e => this.onInputChange(e.target.value) } />
-        <button onClick={ () => this.props.addTodo(this.state.item) }>+</button>
+        <button onClick={ () => this.props.addTodo(this.state.item) }> Add Todo </button>
       </div>
     )
   }
