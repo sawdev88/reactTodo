@@ -112,6 +112,10 @@ button {
   text-align: center;
   overflow: hidden;
   transition: .3s ease-in-out;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .todo-list .completed {
@@ -130,6 +134,10 @@ button {
 
 .margin-top {
   margin-top: 2rem;
+}
+
+.margin-bottom {
+  margin-bottom: 2rem;
 }
 
 @media (max-width: 1000px) {

@@ -70,14 +70,14 @@ class App extends Component {
       <div className="todo-container">
         <h1>React Todo</h1>
         <Input addTodo={ this.addTodo.bind(this) } />
-          { this.state.todos.length ? this.renderTodoList() : <div>No Items</div> }
+          { this.state.todos.length ? this.renderTodoList() : <div className="center">No Items</div> }
           <section
             onClick={ () => this.setState({ activeToolBar: !this.state.activeToolBar }) }
             style={ this.state.activeToolBar ? {height: '12rem', overflowY: 'scroll'} : {height: '2rem'} }
             className="completed-container" >
               Deleted Todos ({ this.state.completedTodos.length })
               <br />
-              {this.state.completedTodos.length ? this.renderCompletedList() : null }
+              { this.state.completedTodos.length ? this.renderCompletedList() : 'No Items' }
           </section>
       </div>
     )
