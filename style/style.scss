@@ -26,7 +26,7 @@ ul {
   padding: 0;
 }
 
-li {
+.todo-list > li {
   text-align: left;
   overflow: hidden;
   position: relative;
@@ -46,6 +46,11 @@ li {
     vertical-align: middle;
     transition: .3s ease-in-out;
     background: #6fceff;
+    z-index: 2;
+  }
+
+  span {
+    pointer-events: none;
   }
 
   &:hover {
@@ -68,6 +73,7 @@ button {
   border: .5rem solid #eee;
   background: #eee;
   vertical-align: top;
+  font-size: .75rem;
 }
 
 input,
@@ -80,19 +86,35 @@ button {
 .container {
   display: flex;
   align-items: center;
-  height: 100vh;
+  justify-content: center;
 }
 
 .todo-container {
+  position: relative;
   background: #fff;
-  height: 80vh;
+  min-height: 80vh;
   width: 80vw;
   padding: 6rem;
+  margin: 10vh 0;
   border-radius: 5px;
-  overflow-y: scroll;
+  overflow: hidden;
 }
 
-.completed {
+.completed-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2rem;
+  background: #eee;
+  color: #333;
+  padding-top: .25rem;
+  text-align: center;
+  overflow: hidden;
+  transition: .3s ease-in-out;
+}
+
+.todo-list .completed {
   background: #ff9494;
   text-decoration: line-through;
   padding-left: 4rem;
@@ -108,4 +130,15 @@ button {
 
 .margin-top {
   margin-top: 2rem;
+}
+
+@media (max-width: 1000px) {
+  html { font-size: 1.7vw; }
+}
+
+@media (max-width: 600px) {
+  html { font-size: 3vw; }
+  input { width: 75% }
+  button { width: 25%; }
+  .todo-container { padding: 2rem; }
 }

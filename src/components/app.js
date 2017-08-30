@@ -6,7 +6,9 @@ class App extends Component {
     super(props);
 
     this.state = {
-      todos: []
+      todos: [],
+      completedTodos: [],
+      activeToolBar: false
     }
 
     const addTodo = this.addTodo.bind(this);
@@ -20,34 +22,42 @@ class App extends Component {
     }
   }
 
-  removeTodo(idx) {
+  addToCompletedTodos(idx, item) {
     this.setState({
-      todos: this.state.todos.filter( (_, i) => i !== idx)
+      todos: this.state.todos.filter( (_, i) => i !== idx),
+      completedTodos: this.state.completedTodos.concat(item)
     })
   }
 
   renderTodoList() {
-    if (this.state.todos.length) {
-      return (
-        <ul>
-          {this.state.todos.map( (item, i) => {
-            return (
-              <li
-                key={ i }
-                onClick={ this.markTodoCompleted }>
-                <i
-                  onClick={ () => this.removeTodo(i) }
-                  className="fa fa-trash"
-                  aria-hidden="true">
-                </i>
-                { item }
-              </li>
-            )
-          })}
-        </ul>
-      )} else {
-        return <div className="center margin-top">No Items</div>
-      }
+    return (
+      <ul className="todo-list">
+        {this.state.todos.map( (item, i) => {
+          return (
+            <li
+              key={ i }
+              onClick={ this.markTodoCompleted }>
+              <i
+                onClick={ () => this.addToCompletedTodos(i, item) }
+                className="fa fa-trash"
+                aria-hidden="true">
+              </i>
+              { item }
+            </li>
+          )
+        })}
+      </ul>
+    )
+  }
+
+  renderCompletedList() {
+    return (
+      <ul>
+        {this.state.completedTodos.map( (item, i) => {
+          return <li key={ i } >{ item }</li>
+        })}
+      </ul>
+    )
   }
 
   markTodoCompleted(e) {
@@ -55,11 +65,20 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.state.completedTodos);
     return (
       <div className="todo-container">
         <h1>React Todo</h1>
         <Input addTodo={ this.addTodo.bind(this) } />
-          { this.renderTodoList() }
+          { this.state.todos.length ? this.renderTodoList() : <div>No Items</div> }
+          <section
+            onClick={ () => this.setState({ activeToolBar: !this.state.activeToolBar }) }
+            style={ this.state.activeToolBar ? {height: '12rem', overflowY: 'scroll'} : {height: '2rem'} }
+            className="completed-container" >
+              Deleted Todos ({ this.state.completedTodos.length })
+              <br />
+              {this.state.completedTodos.length ? this.renderCompletedList() : null }
+          </section>
       </div>
     )
   }
